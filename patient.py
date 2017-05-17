@@ -5,9 +5,10 @@ class Patient(object):
         self.name = names.get_full_name()
 
     def checkIn(self, office, appointment):
-        print("checking in")
         self.env = office.env
-        self.appointmentType = appointment.type
+        self.appointment = appointment
+        print(self.name + " checking in (" + str(self.env.now) + ")")
         yield self.env.timeout(5)
         office.lobby.put(self)
-        print("waiting in lobby")
+        self.appointment.status = "checked in"
+        print(self.name + " waiting in lobby (" + str(self.env.now) + ")")

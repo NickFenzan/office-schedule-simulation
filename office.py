@@ -12,11 +12,8 @@ class Office(object):
 
     def scheduleProcess(self, schedule):
         while True:
-            print(self.env.now)
             for appointment in [a for a in schedule.appointments if a.timerTime == self.env.now]:
-                print(appointment.patient.name + " " + appointment.time)
                 self.env.process(appointment.patient.checkIn(self, appointment))
-
             yield self.env.timeout(1)
         # if self.env.now
 
